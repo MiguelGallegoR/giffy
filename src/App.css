@@ -11,8 +11,14 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 16px;
 }
 
+link{
+  color: #09f;
+  font-size: 24px;
+  
+}
 
 .button{
   font-size: 48px;
