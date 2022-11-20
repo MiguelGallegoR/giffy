@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
-import ListOfGifs from './components/ListOfGifs';
+import Home from './pages/Home';
+import SearchResults from './pages/SearchResults';
+import Detail from './pages/Detail'
 import { Link, Route } from "wouter";
 
 
@@ -9,12 +11,14 @@ function App() {
   return (
     <div className="App">
       <section className="App-content">
-        <h1>App</h1>
-
-          <Link to='/gif/patos'>Gifs de patos</Link> 
-          <Link to='/gif/pinguin'>Gifs de pinguinos</Link> 
-          <Link to='/gif/tattoo'>Gifs de tattoos</Link> 
-          <Route path='/gif/:keyword' component={ListOfGifs} />
+        <Link to='/' >
+          <img className='App-logo' alt='Giffy logo' src='/logo.png' />
+        </Link>
+           
+          <Route path='/' component={Home} />
+          
+          <Route path='/search/:keyword' component={SearchResults} />
+          <Route path='/gif/:id' component={Detail} />
                   
       </section>
     </div>
