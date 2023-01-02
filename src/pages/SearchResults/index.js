@@ -3,7 +3,7 @@ import ListOfGifs from "../../components/ListOfGifs";
 import Spinner from "../../components/Spinner";
 import { useGifs } from "../../hooks/useGifs";
 import useNearScreen  from "../../hooks/useNearScreen";
-import debounce from 'just-debounce-it'
+import debounce from 'just-debounce-it';
 
 export default function SearchResults({params}){
     const {keyword} = params;
@@ -15,7 +15,7 @@ export default function SearchResults({params}){
     
     
     const debounceHandleNextPage = useCallback(debounce(
-        ()=> setPage(prevPage => prevPage + 1), 500
+        ()=> setPage(prevPage => prevPage + 1), 200
     ), [])
     
     useEffect(function (){
