@@ -1,18 +1,42 @@
-import React, {useState} from "react";
+import React, {useState, useReducer} from "react";
 import { useLocation } from "wouter";
 import css from './SearchForm.module.css'
 
-const RATINGS = ['g', 'pg', 'pg-13', 'r']
+const RATINGS = ['g', 'pg', 'pg-13', 'r'];
+
+const reducer = (state, action) =>{
+    if(action.type === 'update_keyword'){
+        return{
+            ...state,
+            keyword:action.payload,
+            times:state.times+1
+        }
+    }else if(action.type === 'update_rating'){
+        return {
+            ...state,
+            rating: action.payload
+        }
+    }
+
+    return state
+}
 
 function SearchForm({ intialKeyword = '', initialRating = 'g'}) {
-    const [keyword, setKeyword] = useState(decodeURIComponent(intialKeyword));
-    const [rating, setRating] = useState(initialRating);
-    const [path, pushLocation] = useLocation();
+    
+    const [state, dispatch] = useReducer(reducer, {
+        keyword: decodeURIComponent(intialKeyword),
+        rating: initialRating,
+        times: 0
+    })
+
+    const {keyword, rating ,times} = state
+
+    const [ , pushLocation] = useLocation();
+    
     
 
-
     const handleChange = (event) =>{
-        setKeyword(event.target.value);
+        dispatch({type: 'update_keyword', payload: event.target.value});
     }
 
     const handleSubmit = event =>{
@@ -23,7 +47,7 @@ function SearchForm({ intialKeyword = '', initialRating = 'g'}) {
     }
 
     const handleChangeRating = (event) =>{
-        setRating(event.target.value);
+        dispatch({type: 'update_rating', payload: event.target.value});
     }
 
     return (
@@ -35,6 +59,7 @@ function SearchForm({ intialKeyword = '', initialRating = 'g'}) {
                 <option disabled>Rating type</option>
                 {RATINGS.map(rating=> <option key={rating}>{rating}</option>)}
             </select>
+            <small>{times}</small>
         </form> 
     )
 }
