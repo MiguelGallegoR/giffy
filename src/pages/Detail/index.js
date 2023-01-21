@@ -30,8 +30,9 @@ export default function Detail ({params}){
             <Helmet>
                 <title>{title} || Giffy</title>
             </Helmet>
+        </HelmetProvider>
             <h3 className="App-title">{gif.title}</h3>
             <Gif {...gif} />
-        </HelmetProvider>
+        
     </> 
 }
