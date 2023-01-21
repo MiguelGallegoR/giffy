@@ -4,7 +4,7 @@ import Spinner from "../../components/Spinner";
 import { useGifs } from "../../hooks/useGifs";
 import useNearScreen  from "../../hooks/useNearScreen";
 import debounce from 'just-debounce-it';
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import SearchForm from "../../components/SearchForm";
 
 export default function SearchResults({params}){
@@ -30,11 +30,13 @@ export default function SearchResults({params}){
 
             ? <Spinner />
             : <> 
-                <Helmet>
-                    <title>{title}</title>
-                    <meta name="description" content={title}></meta>
-                    <meta name="rating" content="General"></meta>
-                </Helmet>
+                <HelmetProvider>
+                    <Helmet>
+                        <title>{title}</title>
+                        <meta name="description" content={title}></meta>
+                        <meta name="rating" content="General"></meta>
+                    </Helmet>
+                </HelmetProvider>
                 <header className="o-header">
                     <SearchForm intialKeyword={keyword} initialRating={rating}/>
                 </header>

@@ -3,7 +3,7 @@ import ListOfGifs from "../../components/ListOfGifs";
 import { useGifs } from "../../hooks/useGifs";
 import TrendingSearches from "../../components/TrendingSearches";
 import SearchForm from "../../components/SearchForm";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 export default function Home(){
     
     
@@ -13,9 +13,11 @@ export default function Home(){
     
     return(
         <>
-            <Helmet>
-                <title>Home | Giffy</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Home | Giffy</title>
+                </Helmet>
+            </HelmetProvider>
             <header className="o-header">
                 <SearchForm/>
             </header>
