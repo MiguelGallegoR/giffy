@@ -1,42 +1,22 @@
-import React, {useState, useReducer} from "react";
+import React from "react";
 import { useLocation } from "wouter";
 import css from './SearchForm.module.css'
+import useForm from "./hook";
+
 
 const RATINGS = ['g', 'pg', 'pg-13', 'r'];
 
-const reducer = (state, action) =>{
-    if(action.type === 'update_keyword'){
-        return{
-            ...state,
-            keyword:action.payload,
-            times:state.times+1
-        }
-    }else if(action.type === 'update_rating'){
-        return {
-            ...state,
-            rating: action.payload
-        }
-    }
-
-    return state
-}
 
 function SearchForm({ intialKeyword = '', initialRating = 'g'}) {
     
-    const [state, dispatch] = useReducer(reducer, {
-        keyword: decodeURIComponent(intialKeyword),
-        rating: initialRating,
-        times: 0
-    })
-
-    const {keyword, rating ,times} = state
+    const {keyword, rating ,times, updateKeyword, updateRating} = useForm({intialKeyword, initialRating})
 
     const [ , pushLocation] = useLocation();
     
     
-
     const handleChange = (event) =>{
-        dispatch({type: 'update_keyword', payload: event.target.value});
+        updateKeyword(event.target.value)
+        
     }
 
     const handleSubmit = event =>{
@@ -47,7 +27,8 @@ function SearchForm({ intialKeyword = '', initialRating = 'g'}) {
     }
 
     const handleChangeRating = (event) =>{
-        dispatch({type: 'update_rating', payload: event.target.value});
+        updateRating(event.target.value)
+        
     }
 
     return (
