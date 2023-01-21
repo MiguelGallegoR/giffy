@@ -1,30 +1,25 @@
 import React, { useCallback } from "react";
-import { Link, useLocation } from "wouter";
 import ListOfGifs from "../../components/ListOfGifs";
 import { useGifs } from "../../hooks/useGifs";
 import TrendingSearches from "../../components/TrendingSearches";
 import SearchForm from "../../components/SearchForm";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 export default function Home(){
     
-    const [path, pushLocation] = useLocation();
+    
     const {loading, gifs} = useGifs()
 
 
-    const handleSubmit = useCallback(({keyword}) =>{
-        //navegar a otra ruta
-        pushLocation(`/search/${keyword}`)
-        
-        
-    }, [pushLocation])
     
     return(
         <>
-            <Helmet>
-                <title>Home | Giffy</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Home | Giffy</title>
+                </Helmet>
+            </HelmetProvider>
             <header className="o-header">
-                <SearchForm onSubmit={handleSubmit} />
+                <SearchForm/>
             </header>
             <div className="App-wrapper">
                 <div className="App-main">
