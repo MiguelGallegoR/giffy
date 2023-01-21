@@ -26,10 +26,12 @@ export default function Detail ({params}){
     if(!gif) return null
 
     return <>
-        <Helmet>
-            <title>{title} || Giffy</title>
-        </Helmet>
-        <h3 className="App-title">{gif.title}</h3>
-        <Gif {...gif} />
+        <HelmetProvider>
+            <Helmet>
+                <title>{title} || Giffy</title>
+            </Helmet>
+            <h3 className="App-title">{gif.title}</h3>
+            <Gif {...gif} />
+        </HelmetProvider>
     </> 
 }
