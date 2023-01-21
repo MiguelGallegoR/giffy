@@ -4,7 +4,7 @@ import useSingleGif from "../../hooks/useSingleGif";
 import Spinner from "../../components/Spinner"
 import { Redirect } from "wouter";
 import useSEO from "../../hooks/useSEO";
-import {Helmet} from 'react-helmet';
+import {Helmet, HelmetProvider} from 'react-helmet-async';
 
 export default function Detail ({params}){
     const {gif, isLoading, isError} = useSingleGif({id: params.id})
@@ -13,9 +13,11 @@ export default function Detail ({params}){
     if(isLoading){
          return(
             <>
-                <Helmet>
-                    <title>Cargando...</title>
-                </Helmet>
+                <HelmetProvider>
+                    <Helmet>
+                        <title>Cargando...</title>
+                    </Helmet>
+                </HelmetProvider>
                 <Spinner />
             </>
         )
