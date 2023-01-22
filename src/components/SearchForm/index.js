@@ -40,7 +40,7 @@ function SearchForm({ intialKeyword = '', initialRating = 'g'}) {
                 <option disabled>Rating type</option>
                 {RATINGS.map(rating=> <option key={rating}>{rating}</option>)}
             </select>
-            <small>{times}</small>
+            
         </form> 
     )
 }
