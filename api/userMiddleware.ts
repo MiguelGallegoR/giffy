@@ -1,7 +1,10 @@
 import { Context } from "https://deno.land/x/oak@v5.0.0/mod.ts";
-import { verify } from "https://deno.land/x/djwt/mod.ts"
+import { verify, validate } from "https://deno.land/x/djwt/mod.ts"
 import { users, User } from "./users.ts";
 import { load } from "https://deno.land/std/dotenv/mod.ts";
+
+import {key} from './routes.ts'
+
 
 console.log(await load());
 
@@ -10,18 +13,14 @@ Deno.env.set("JWT_KEY", 'Valor de jwt key');
 const jwt_key = Deno.env.get("JWT_KEY");
 console.log(jwt_key);
 */
+//const key = await crypto.subtle.generateKey({ name: "HMAC", hash: "SHA-256" },true,["sign", "verify"])
 
-const key = await crypto.subtle.generateKey(
-    { name: "HMAC", hash: "SHA-512" },
-    true,
-    ["sign", "verify"],
-);
 
 
 const userMiddleware = async (ctx:Context, next:Function) => {
   // Get JWT from request if available
-  const { value ={} } = await ctx.request.body();
-  let {jwt} = value
+  const body = await ctx.request.body();
+  let {jwt} =  await body.value
   
   if (!jwt) {
     jwt = ctx.request.headers.get('Authorization')
@@ -31,7 +30,7 @@ const userMiddleware = async (ctx:Context, next:Function) => {
 
   if (jwt) {
     // Validate JWT and if it is invalid delete from cookie
- 
+   
     const data = await verify(jwt, key || '');
     
     if (!data.isValid || data.isExpired) {

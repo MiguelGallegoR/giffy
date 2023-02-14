@@ -19,17 +19,25 @@ const DEFAULT_PORT = 8080
 const portFromArgs = flags.parse(args).port
 const port = portFromArgs ? Number(portFromArgs) : DEFAULT_PORT
 
+
 const app = new Application()
 const router = new Router()
 
-app.use(userMiddleware, oakCors())
+
+
+app.use(userMiddleware, oakCors({
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  optionsSuccessStatus: 200,
+  
+}))
 
 router
-  .get('/favs', authMiddleware, getFavs)
-  .delete("/favs/:id", authMiddleware, deleteFav)
-  .post("/favs/:id", authMiddleware, postFav)
-  .post("/login", postLogin)
-  .post("/register", postRegister)
+  .get('/favs',oakCors(), authMiddleware, getFavs)
+  .delete("/favs/:id", oakCors(), authMiddleware, deleteFav)
+  .post("/favs/:id", oakCors(), authMiddleware, postFav)
+  .post("/login", oakCors(),postLogin)
+  .post("/register", oakCors(), postRegister)
 
 app.addEventListener('error', evt => {
   console.log(evt.error)
